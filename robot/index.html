@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Example</title>
+        <script src="raphael-min.js"></script>      
+        <script src="windmill.js"></script>
+        <script>
+            function pageLoaded(){
+                windmill.init();
+            }
+        </script>
+    </head>
+    <body onLoad="pageLoaded()">
+        <h1>SVG Animation</h1>
+        <div id="windmill" style="width:20%"></div>
+        <p>
+            <button onClick="windmill.start()">Start</button>
+            <button onClick="windmill.stop()">Stop</button>
+        </p>
+
+        <style>
+            #windmill svg{
+                height:400px !important;
+                width:400px !important;
+            }
+        </style>
+    </body>
+</html>
