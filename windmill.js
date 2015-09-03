@@ -3,6 +3,8 @@
 var windmill=(function(){
         var scale_factor; var toptwo; var topone; var rtwo; var rthree; var rfour; var rfive; var righthand; var spinning=false; var original_height; var original_width;
         var options={};
+        var myRectangles;
+        var myGroup;
         options.teal_color='#7aaf96';
         options.darkteal_color='#517c6b';
         options.orange_color='#c85449';
@@ -12,23 +14,23 @@ var windmill=(function(){
         options.white_color='#fff';
 
         options.time=3000;
-        
+
         var init=function(){
-            var div = document.getElementById("windmill");      
+            var div = document.getElementById("windmill");
             var width=div.offsetWidth;
             original_width=300;
             original_height=300;
             scale_factor=width/original_width;
-            var height=original_height*scale_factor;                    
-            var transformation='S'+scale_factor+','+scale_factor+',0,0';    
+            var height=original_height*scale_factor;
+            var transformation='S'+scale_factor+','+scale_factor+',0,0';
             var paper=Raphael(div, width, height);
 
 
             //M 25.79661,5.5593224 A 3.1525424,3.2542372 0 0 1 22.644068,8.8135595 3.1525424,3.2542372 0 0 1 19.491525,5.5593224 3.1525424,3.2542372 0 0 1 22.644068,2.3050852 3.1525424,3.2542372 0 0 1 25.79661,5.5593224 Z M 18.61017,15.18644 a 3.1525424,3.2542372 0 0 1 -3.152543,3.254238 3.1525424,3.2542372 0 0 1 -3.152542,-3.254238 3.1525424,3.2542372 0 0 1 3.152542,-3.254237 3.1525424,3.2542372 0 0 1 3.152543,3.254237 z M 10.847458,5.8305082 A 3.1525424,3.2542372 0 0 1 7.6949153,9.0847454 3.1525424,3.2542372 0 0 1 4.5423729,5.8305082 3.1525424,3.2542372 0 0 1 7.6949153,2.5762711 3.1525424,3.2542372 0 0 1 10.847458,5.8305082 Z
-            toptwo_path="m 390.24228,229.04181 c -7.48015,-0.98149 -14.28028,2.29014 -18.13369,7.6338 -3.85341,-5.34366 -10.76686,-8.61529 -18.247,-7.52474 -8.2735,1.19959 -14.84696,7.8519 -15.75365,15.81286 -1.24668,10.90542 7.70682,20.06597 18.70036,20.06597 0.45335,0 0.90668,0 1.36003,-0.10911 l 10.2002,0 0.1133,18.64828 8.27348,0 -0.11329,-18.64828 9.74685,0 c 0.45335,0 0.90668,0.10911 1.36002,0.10911 11.10688,-0.10911 19.83372,-9.37866 18.47369,-20.17502 -1.02002,-8.07002 -7.70682,-14.61328 -15.9803,-15.81287 z m -43.86084,19.84786 c -1.2467,-6.8704 4.87342,-12.86839 12.1269,-11.77784 4.30674,0.65432 7.93348,4.03499 8.6135,8.17905 1.24669,6.87043 -4.87342,12.86841 -12.1269,11.77786 -4.30676,-0.65432 -7.93349,-4.03501 -8.6135,-8.17907 z m 42.95415,8.07002 c -7.14014,1.1996 -13.37359,-4.68933 -12.24023,-11.66881 0.68001,-4.14406 4.19341,-7.63379 8.50016,-8.28811 7.14014,-1.1996 13.3736,4.68933 12.24023,11.6688 -0.56667,4.14406 -4.08007,7.52475 -8.50016,8.28812 z";            
+            toptwo_path="m 390.24228,229.04181 c -7.48015,-0.98149 -14.28028,2.29014 -18.13369,7.6338 -3.85341,-5.34366 -10.76686,-8.61529 -18.247,-7.52474 -8.2735,1.19959 -14.84696,7.8519 -15.75365,15.81286 -1.24668,10.90542 7.70682,20.06597 18.70036,20.06597 0.45335,0 0.90668,0 1.36003,-0.10911 l 10.2002,0 0.1133,18.64828 8.27348,0 -0.11329,-18.64828 9.74685,0 c 0.45335,0 0.90668,0.10911 1.36002,0.10911 11.10688,-0.10911 19.83372,-9.37866 18.47369,-20.17502 -1.02002,-8.07002 -7.70682,-14.61328 -15.9803,-15.81287 z m -43.86084,19.84786 c -1.2467,-6.8704 4.87342,-12.86839 12.1269,-11.77784 4.30674,0.65432 7.93348,4.03499 8.6135,8.17905 1.24669,6.87043 -4.87342,12.86841 -12.1269,11.77786 -4.30676,-0.65432 -7.93349,-4.03501 -8.6135,-8.17907 z m 42.95415,8.07002 c -7.14014,1.1996 -13.37359,-4.68933 -12.24023,-11.66881 0.68001,-4.14406 4.19341,-7.63379 8.50016,-8.28811 7.14014,-1.1996 13.3736,4.68933 12.24023,11.6688 -0.56667,4.14406 -4.08007,7.52475 -8.50016,8.28812 z";
             var meter_path="M 345.5 428.4 C 345.4 428.2 343 425.3 344.8 421.8 L 345 421.3 C 347.2 417.1 352.2 407 370.2 406.8 L 370.6 406.8 C 388.7 406.9 393.6 416.9 395.8 421.3 L 396 421.8 C 397.8 425.3 395.5 428.2 395.3 428.3 L 386.5 440.4 L 370.3 440.4 L 354.1 440.4 L 345.5 428.4Z";
             var meterouter_path="M 370.4 407.9 L 370.6 407.9 C 387.9 408 392.5 417.3 394.8 421.7 L 395 422.3 C 396.5 425.1 394.5 427.5 394.5 427.6 L 394.5 427.7 L 394.5 427.8 L 386.2 439.5 L 370.5 439.5 L 354.9 439.5 L 346.5 427.8 L 346.5 427.7 L 346.5 427.6 C 346.5 427.6 344.6 425.2 346 422.3 L 346.3 421.7 C 348.5 417.3 353.2 408 370.4 407.9 L 370.4 407.9 M 370.6 405.7 C 370.5 405.7 370.5 405.7 370.4 405.7 C 370.3 405.7 370.3 405.7 370.2 405.7 L 370.2 405.7 C 350.7 405.9 345.8 417.3 343.8 421.3 C 341.6 425.4 344.6 428.9 344.6 428.9 L 353.6 441.5 L 370.4 441.5 L 387.2 441.5 L 396.2 428.9 C 396.2 428.9 399.2 425.4 397 421.3 C 395 417.3 390.1 405.9 370.6 405.7 L 370.6 405.7 L 370.6 405.7Z"
-            var body_path="m 446.00334,461.65448 c 0,6.6523 -5.66677,12.10503 -12.58024,12.10503 l -121.949,0 c -6.91346,0 -12.58023,-5.45273 -12.58023,-12.10503 l 0,-68.70416 c 0,-6.65231 5.66677,-12.10502 12.58023,-12.10502 l 121.949,0 c 6.91347,0 12.58024,5.45271 12.58024,12.10502 l 0,68.70416 z";            
+            var body_path="m 446.00334,461.65448 c 0,6.6523 -5.66677,12.10503 -12.58024,12.10503 l -121.949,0 c -6.91346,0 -12.58023,-5.45273 -12.58023,-12.10503 l 0,-68.70416 c 0,-6.65231 5.66677,-12.10502 12.58023,-12.10502 l 121.949,0 c 6.91347,0 12.58024,5.45271 12.58024,12.10502 l 0,68.70416 z";
             topone_path="M360.208375,288.91257a11.673555,8.3971758 0 1,0 23.34711,0a11.673555,8.3971758 0 1,0 -23.34711,0";
             var head_path="M 309.4 287.6 L 431.9 287.6 L 431.9 374 L 309.4 374 L 309.4 287.6";
             var mone_path="M 335.8 353.6 L 344.8 353.6 L 344.8 362.2 L 335.8 362.2 L 335.8 353.6";
@@ -56,7 +58,7 @@ var windmill=(function(){
             var retwo_path="m 383.89549,323.26467 c 0,-8.07002 6.80013,-14.61328 15.18695,-14.61328 8.38682,0 15.18696,6.54326 15.18696,14.61328 0,8.07001 -6.80014,14.61325 -15.18696,14.61325 -8.38682,0 -15.18695,-6.54324 -15.18695,-14.61325 z";
             var rethree_path="M393.4156645,322.82843a5.8934455,5.6708202 0 1,0 11.786891,0a5.8934455,5.6708202 0 1,0 -11.786891,0";
             var refour_path="m 400.78248,321.73791 c 0,-2.07203 1.81337,-3.8169 3.96674,-3.8169 2.15337,0 3.96674,1.74487 3.96674,3.8169 0,2.07203 -1.81337,3.8169 -3.96674,3.8169 -2.15337,0 -3.96674,-1.74487 -3.96674,-3.8169 z";
-            
+
             // var righthand=paper.set();
             // righthand.push{
                 rtwo_path="m 453.03014,375.39258 c 0,-2.6173 2.15337,-4.68932 4.87343,-4.68932 l 0,0 c 2.72004,0 4.87342,2.07202 4.87342,4.68932 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
@@ -64,8 +66,8 @@ var windmill=(function(){
                 rfour_path="m 453.03014,325.77291 c 0,-2.6173 2.15337,-4.68933 4.87343,-4.68933 l 0,0 c 2.72004,0 4.87342,2.07203 4.87342,4.68933 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
                 rfive_path="m 468.5571,319.55683 c 0,0 0.22667,14.83138 -9.18017,14.83138 -9.40685,0 -11.7869,-7.08853 -11.7869,-16.4672 0,0 0.90668,-3.38069 3.28674,-3.38069 2.38003,0 -0.22668,6.32516 1.47335,7.96096 1.70004,1.63581 3.51341,-1.96298 3.51341,-6.32514 0,-4.47122 5.32676,-3.59879 8.95349,-3.59879 3.74008,0 3.74008,1.85392 3.74008,6.97948 z";
             // }
-            var rone_path="m 444.41664,392.40505 c 0,-2.50826 2.04004,-4.47122 4.64675,-4.47122 l 0,0 c 2.60672,0 4.64675,1.96296 4.64675,4.47122 l 0,12.32312 c 0,2.50824 -2.15337,4.47124 -4.64675,4.47124 l 0,0 c -2.60671,0 -4.64675,-1.963 -4.64675,-4.47124 l 0,-12.32312 z";  
-            var needle_path="M 365.8 438.4 L 361.5 422.7 L 374.5 438.5 L 365.8 438.4";  
+            var rone_path="m 444.41664,392.40505 c 0,-2.50826 2.04004,-4.47122 4.64675,-4.47122 l 0,0 c 2.60672,0 4.64675,1.96296 4.64675,4.47122 l 0,12.32312 c 0,2.50824 -2.15337,4.47124 -4.64675,4.47124 l 0,0 c -2.60671,0 -4.64675,-1.963 -4.64675,-4.47124 l 0,-12.32312 z";
+            var needle_path="M 365.8 438.4 L 361.5 422.7 L 374.5 438.5 L 365.8 438.4";
             // var head_path=rect(86.370941, 122.51567, 287.60394, 309.43405);
 
 
@@ -73,7 +75,7 @@ var windmill=(function(){
             var toptwo_path_scaled=Raphael.transformPath(toptwo_path, transformation);
             var meter_path_scaled=Raphael.transformPath(meter_path, transformation);
             var meterouter_path_scaled=Raphael.transformPath(meterouter_path, transformation);
-            var body_path_scaled=Raphael.transformPath(body_path, transformation);   
+            var body_path_scaled=Raphael.transformPath(body_path, transformation);
             topone_path_scaled=Raphael.transformPath(topone_path, transformation);
             var head_path_scaled=Raphael.transformPath(head_path, transformation);
             var mone_path_scaled=Raphael.transformPath(mone_path, transformation);
@@ -110,12 +112,12 @@ var windmill=(function(){
             // var head_path_scaled=Raphael.transformPath(head_path, transformation);
 
 
-            var body=paper.path(body_path_scaled);          
+            var body=paper.path(body_path_scaled);
             body.attr({fill: options.teal_color, "stroke-width": 0});
             var meter=paper.path(meter_path_scaled);
-            meter.attr({fill: options.brown_color, "stroke-width": 0}); 
+            meter.attr({fill: options.brown_color, "stroke-width": 0});
             var meterouter=paper.path(meterouter_path_scaled);
-            meterouter.attr({fill: options.yellow_color, "stroke-width": 0}); 
+            meterouter.attr({fill: options.yellow_color, "stroke-width": 0});
             toptwo=paper.path(toptwo_path_scaled);
             toptwo.attr({fill: options.darkteal_color, "stroke-width": 0});
             topone=paper.path(topone_path_scaled);
@@ -185,10 +187,16 @@ var windmill=(function(){
             var needle=paper.path(needle_path_scaled);
             needle.attr({fill: options.darkteal_color, "stroke-width": 0});
 
-            // var myRectangles = [rtwo,rthree,rfour,rfive];
-            // var myGroup = r.group(4,myRectangles);
+            myRectangles = paper.set();
+            myRectangles.push(
+                rtwo,
+                rthree,
+                rfour,
+                rfive
+            );
+
         }
-        
+
 
 
 
@@ -196,23 +204,24 @@ var windmill=(function(){
             if (spinning){return}else{spinning=true}
             toptwo.animate({transform: "S-1,1"},500,'easeOut');
 
-            rtwo.rotate(3,453.26,655.49);
-            rthree.rotate(3,453.26,655.49);
-            rfour.rotate(3,453.26,655.49);
-            rfive.rotate(3,453.26,655.49);
-            
+           myRectangles.animate({transform: "R10,"+ "5.19" +"," + "2.19"}, 100,'easeOut');
+            // rtwo.rotate(3,453.26,655.49);
+            // rthree.rotate(3,453.26,655.49);
+            // rfour.rotate(3,453.26,655.49);
+            // rfive.rotate(3,453.26,655.49);
+
             // var center_x=(365.71)*scale_factor;
-            // var center_y=(original_height-(502.86))*scale_factor;                
+            // var center_y=(original_height-(502.86))*scale_factor;
 
             // var playButtonRef = r.set().push(rtwo).push(rthree).push(rfour).push(rfive);
             // playButtonRef.rotate(3,453.26,655.49);
 
-            // var positionrtwo='R'+20+', '+center_x+', '+center_y;  
+            // var positionrtwo='R'+20+', '+center_x+', '+center_y;
             // var rtwoAnim=Raphael.animation({transform: posi00onrtwo}, options.time, 'linear').repeat(Infinity);
             // rtwo.animate(rtwoAnim);
 
             // var position='R'+360+', '+center_x+', '+center_y;
-            // var anim=Raphael.animation({transform: position}, options.time, 'linear').repeat(Infinity); 
+            // var anim=Raphael.animation({transform: position}, options.time, 'linear').repeat(Infinity);
             // toptwo.animate(anim);
 
         }
@@ -220,7 +229,7 @@ var windmill=(function(){
             if (!spinning){return}else{spinning=false}
             toptwo.stop();
             // var current_path=Raphael.transformPath(toptwo.attr('path'), toptwo.attr('transform'))
-            // toptwo.attr({path: current_path, transform: ''});    
+            // toptwo.attr({path: current_path, transform: ''});
         }
 
         return {
