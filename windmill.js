@@ -1,7 +1,7 @@
 //Code written by Chris Youderian and released under this MIT license: http://opensource.org/licenses/MIT
 
 var windmill=(function(){
-        var scale_factor; var toptwo; var topone; var rtwo; var rthree; var rfour; var rfive; var righthand; var spinning=false; var original_height; var original_width;
+        var scale_factor; var toptwo; var topone; var rtwo; var rthree; var rfour; var rfive; var lhtwo; var lhthree; var lhfour; var lhfive; var righthand; var spinning=false; var original_height; var original_width;
         var options={};
         var myRectangles;
         var myGroup;
@@ -13,13 +13,13 @@ var windmill=(function(){
         options.brown_color='#463023';
         options.white_color='#fff';
 
-        options.time=3000;
+        options.time=10000;
 
         var init=function(){
             var div = document.getElementById("windmill");
             var width=div.offsetWidth;
-            original_width=300;
-            original_height=300;
+            original_width=210;
+            original_height=297;
             scale_factor=width/original_width;
             var height=original_height*scale_factor;
             var transformation='S'+scale_factor+','+scale_factor+',0,0';
@@ -39,10 +39,10 @@ var windmill=(function(){
             var mfour_path="M 379.8 353.6 L 388.8 353.6 L 388.8 362.2 L 379.8 362.2 L 379.8 353.6";
             var mfive_path="M 394.4 353.6 L 403.4 353.6 L 403.4 362.2 L 394.4 362.2 L 394.4 353.6";
             var lhone_path="m 298.55387,406.47304 c 0,2.50824 -2.04004,4.47123 -4.64676,4.47123 l 0,0 c -2.60672,0 -4.64676,-1.96299 -4.64676,-4.47123 l 0,-12.32313 c 0,-2.50825 2.15337,-4.47122 4.64676,-4.47122 l 0,0 c 2.60672,0 4.64676,2.07202 4.64676,4.47122 l 0,12.32313 z";
-            var lhtwo_path="m 289.82703,423.4855 c 0,2.6173 -2.15337,4.68933 -4.87343,4.68933 l 0,0 c -2.72005,0 -4.87343,-2.07203 -4.87343,-4.68933 l 0,-27.59072 c 0,-2.61729 2.15338,-4.68934 4.87343,-4.68934 l 0,0 c 2.72006,0 4.87343,2.07205 4.87343,4.68934 l 0,27.59072 z";
-            var lhthree_path="M277.4734611,433.84564a6.8001289,6.5432534 0 1,0 13.6002578,0a6.8001289,6.5432534 0 1,0 -13.6002578,0";
-            var lhfour_path="m 289.82703,472.99611 c 0,2.61732 -2.15337,4.68934 -4.87343,4.68934 l 0,0 c -2.72005,0 -4.87343,-2.07202 -4.87343,-4.68934 l 0,-27.59071 c 0,-2.61731 2.15338,-4.68932 4.87343,-4.68932 l 0,0 c 2.72006,0 4.87343,2.07201 4.87343,4.68932 l 0,27.59071 z";
-            var lhfive_path="m 274.30006,479.32127 c 0,0 -0.22668,-14.83138 9.18018,-14.83138 9.40685,0 11.78689,7.08853 11.78689,16.46719 0,0 -0.90668,3.38067 -3.28673,3.38067 -2.38004,0 0.22667,-6.32513 -1.47336,-7.96095 -1.70003,-1.63582 -3.5134,1.96297 -3.5134,6.32515 0,4.47122 -5.32676,3.59878 -8.95351,3.59878 -3.62674,0 -3.74007,-1.85392 -3.74007,-6.97946 z";
+            lhtwo_path="m 289.82703,423.4855 c 0,2.6173 -2.15337,4.68933 -4.87343,4.68933 l 0,0 c -2.72005,0 -4.87343,-2.07203 -4.87343,-4.68933 l 0,-27.59072 c 0,-2.61729 2.15338,-4.68934 4.87343,-4.68934 l 0,0 c 2.72006,0 4.87343,2.07205 4.87343,4.68934 l 0,27.59072 z";
+            lhthree_path="M277.4734611,433.84564a6.8001289,6.5432534 0 1,0 13.6002578,0a6.8001289,6.5432534 0 1,0 -13.6002578,0";
+            lhfour_path="m 289.82703,472.99611 c 0,2.61732 -2.15337,4.68934 -4.87343,4.68934 l 0,0 c -2.72005,0 -4.87343,-2.07202 -4.87343,-4.68934 l 0,-27.59071 c 0,-2.61731 2.15338,-4.68932 4.87343,-4.68932 l 0,0 c 2.72006,0 4.87343,2.07201 4.87343,4.68932 l 0,27.59071 z";
+            lhfive_path="m 274.30006,479.32127 c 0,0 -0.22668,-14.83138 9.18018,-14.83138 9.40685,0 11.78689,7.08853 11.78689,16.46719 0,0 -0.90668,3.38067 -3.28673,3.38067 -2.38004,0 0.22667,-6.32513 -1.47336,-7.96095 -1.70003,-1.63582 -3.5134,1.96297 -3.5134,6.32515 0,4.47122 -5.32676,3.59878 -8.95351,3.59878 -3.62674,0 -3.74007,-1.85392 -3.74007,-6.97946 z";
             var middleye_path="m 417.32946,324.68237 c 0,6.65231 -5.66677,12.10502 -12.58024,12.10502 l -68.79465,0 c -6.91346,0 -12.58023,-5.45271 -12.58023,-12.10502 l 0,-4.25311 c 0,-6.65231 5.66677,-12.10503 12.58023,-12.10503 l 68.79465,0 c 6.91347,0 12.58024,5.45272 12.58024,12.10503 l 0,4.25311 z";
             var llone_path="M 321 478.8 L 349.2 478.8 L 349.2 562.6 L 321 562.6 L 321 478.8";
             var lltwo_path="m 355.67495,516.07254 c 0,5.23461 -4.42009,9.37866 -9.74685,9.37866 l -22.3271,0 c -5.44009,0 -9.74684,-4.25311 -9.74684,-9.37866 l 0,0 c 0,-5.2346 4.42008,-9.37866 9.74684,-9.37866 l 22.3271,0 c 5.44011,-0.10899 9.74685,4.14406 9.74685,9.37866 l 0,0 z";
@@ -58,14 +58,10 @@ var windmill=(function(){
             var retwo_path="m 383.89549,323.26467 c 0,-8.07002 6.80013,-14.61328 15.18695,-14.61328 8.38682,0 15.18696,6.54326 15.18696,14.61328 0,8.07001 -6.80014,14.61325 -15.18696,14.61325 -8.38682,0 -15.18695,-6.54324 -15.18695,-14.61325 z";
             var rethree_path="M393.4156645,322.82843a5.8934455,5.6708202 0 1,0 11.786891,0a5.8934455,5.6708202 0 1,0 -11.786891,0";
             var refour_path="m 400.78248,321.73791 c 0,-2.07203 1.81337,-3.8169 3.96674,-3.8169 2.15337,0 3.96674,1.74487 3.96674,3.8169 0,2.07203 -1.81337,3.8169 -3.96674,3.8169 -2.15337,0 -3.96674,-1.74487 -3.96674,-3.8169 z";
-
-            // var righthand=paper.set();
-            // righthand.push{
-                rtwo_path="m 453.03014,375.39258 c 0,-2.6173 2.15337,-4.68932 4.87343,-4.68932 l 0,0 c 2.72004,0 4.87342,2.07202 4.87342,4.68932 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
-                rthree_path="M451.7834611,365.03244a6.8001289,6.5432534 0 1,0 13.6002578,0a6.8001289,6.5432534 0 1,0 -13.6002578,0";
-                rfour_path="m 453.03014,325.77291 c 0,-2.6173 2.15337,-4.68933 4.87343,-4.68933 l 0,0 c 2.72004,0 4.87342,2.07203 4.87342,4.68933 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
-                rfive_path="m 468.5571,319.55683 c 0,0 0.22667,14.83138 -9.18017,14.83138 -9.40685,0 -11.7869,-7.08853 -11.7869,-16.4672 0,0 0.90668,-3.38069 3.28674,-3.38069 2.38003,0 -0.22668,6.32516 1.47335,7.96096 1.70004,1.63581 3.51341,-1.96298 3.51341,-6.32514 0,-4.47122 5.32676,-3.59879 8.95349,-3.59879 3.74008,0 3.74008,1.85392 3.74008,6.97948 z";
-            // }
+            rtwo_path="m 453.03014,375.39258 c 0,-2.6173 2.15337,-4.68932 4.87343,-4.68932 l 0,0 c 2.72004,0 4.87342,2.07202 4.87342,4.68932 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
+            rthree_path="M451.7834611,365.03244a6.8001289,6.5432534 0 1,0 13.6002578,0a6.8001289,6.5432534 0 1,0 -13.6002578,0";
+            rfour_path="m 453.03014,325.77291 c 0,-2.6173 2.15337,-4.68933 4.87343,-4.68933 l 0,0 c 2.72004,0 4.87342,2.07203 4.87342,4.68933 l 0,27.59073 c 0,2.6173 -2.15338,4.68932 -4.87342,4.68932 l 0,0 c -2.72006,0 -4.87343,-2.07202 -4.87343,-4.68932 l 0,-27.59073 z";
+            rfive_path="m 468.5571,319.55683 c 0,0 0.22667,14.83138 -9.18017,14.83138 -9.40685,0 -11.7869,-7.08853 -11.7869,-16.4672 0,0 0.90668,-3.38069 3.28674,-3.38069 2.38003,0 -0.22668,6.32516 1.47335,7.96096 1.70004,1.63581 3.51341,-1.96298 3.51341,-6.32514 0,-4.47122 5.32676,-3.59879 8.95349,-3.59879 3.74008,0 3.74008,1.85392 3.74008,6.97948 z";
             var rone_path="m 444.41664,392.40505 c 0,-2.50826 2.04004,-4.47122 4.64675,-4.47122 l 0,0 c 2.60672,0 4.64675,1.96296 4.64675,4.47122 l 0,12.32312 c 0,2.50824 -2.15337,4.47124 -4.64675,4.47124 l 0,0 c -2.60671,0 -4.64675,-1.963 -4.64675,-4.47124 l 0,-12.32312 z";
             var needle_path="M 365.8 438.4 L 361.5 422.7 L 374.5 438.5 L 365.8 438.4";
             // var head_path=rect(86.370941, 122.51567, 287.60394, 309.43405);
@@ -84,10 +80,10 @@ var windmill=(function(){
             var mfour_path_scaled=Raphael.transformPath(mfour_path, transformation);
             var mfive_path_scaled=Raphael.transformPath(mfive_path, transformation);
             var lhone_path_scaled=Raphael.transformPath(lhone_path, transformation);
-            var lhtwo_path_scaled=Raphael.transformPath(lhtwo_path, transformation);
-            var lhfour_path_scaled=Raphael.transformPath(lhfour_path, transformation);
-            var lhthree_path_scaled=Raphael.transformPath(lhthree_path, transformation);
-            var lhfive_path_scaled=Raphael.transformPath(lhfive_path, transformation);
+            lhtwo_path_scaled=Raphael.transformPath(lhtwo_path, transformation);
+            lhfour_path_scaled=Raphael.transformPath(lhfour_path, transformation);
+            lhthree_path_scaled=Raphael.transformPath(lhthree_path, transformation);
+            lhfive_path_scaled=Raphael.transformPath(lhfive_path, transformation);
             var middleye_path_scaled=Raphael.transformPath(middleye_path, transformation);
             var llone_path_scaled=Raphael.transformPath(llone_path, transformation);
             var lltwo_path_scaled=Raphael.transformPath(lltwo_path, transformation);
@@ -136,13 +132,13 @@ var windmill=(function(){
             mfive.attr({fill: options.yellow_color, "stroke-width": 0});
             var lhone=paper.path(lhone_path_scaled);
             lhone.attr({fill: options.orange_color, "stroke-width": 0});
-            var lhtwo=paper.path(lhtwo_path_scaled);
+            lhtwo=paper.path(lhtwo_path_scaled);
             lhtwo.attr({fill: options.skin_color, "stroke-width": 0});
-            var lhfour=paper.path(lhfour_path_scaled);
+            lhfour=paper.path(lhfour_path_scaled);
             lhfour.attr({fill: options.skin_color, "stroke-width": 0});
-            var lhthree=paper.path(lhthree_path_scaled);
+            lhthree=paper.path(lhthree_path_scaled);
             lhthree.attr({fill: options.brown_color, "stroke-width": 0});
-            var lhfive=paper.path(lhfive_path_scaled);
+            lhfive=paper.path(lhfive_path_scaled);
             lhfive.attr({fill: options.teal_color, "stroke-width": 0});
             var middleye=paper.path(middleye_path_scaled);
             middleye.attr({fill: options.darkteal_color, "stroke-width": 0});
@@ -187,13 +183,15 @@ var windmill=(function(){
             var needle=paper.path(needle_path_scaled);
             needle.attr({fill: options.darkteal_color, "stroke-width": 0});
 
-            myRectangles = paper.set();
-            myRectangles.push(
-                rtwo,
-                rthree,
-                rfour,
-                rfive
-            );
+            // myRectangles = paper.set();
+            // myRectangles.push(
+            //     rtwo,
+            //     rthree,
+            //     rfour,
+            //     rfive
+            // );
+
+
 
         }
 
@@ -202,19 +200,43 @@ var windmill=(function(){
 
         var start=function(){
             if (spinning){return}else{spinning=true}
-            toptwo.animate({transform: "S-1,1"},500,'easeOut');
+            toptwo.animate({transform: "S-1,1"},2000,'easeOut');
 
-           myRectangles.animate({transform: "R10,"+ "5.19" +"," + "2.19"}, 100,'easeOut');
-            // rtwo.rotate(3,453.26,655.49);
-            // rthree.rotate(3,453.26,655.49);
-            // rfour.rotate(3,453.26,655.49);
-            // rfive.rotate(3,453.26,655.49);
+           // myRectangles.animate({transform: "R3,"+ "457.86" +"," + "645.00"}, 100,'easeOut');
+
+             rtwo.animate({transform: "t13,-2r25"},1000);
+             rthree.animate({transform: "t26,1r25"},1000);
+             rfour.animate({transform: "t40,5r25"},1000);
+             rfive.animate({transform: "t55,-7r25"},1000);
+             // rtwo.transform("t13,-2r25"); 
+             // rthree.transform("t26,1r25");
+             // rfour.transform("t40,5r25");
+             // rfive.transform("t55,-7r25");
+
+             lhtwo.animate({transform: "t-23,-9r90"},800);
+             lhthree.animate({transform: "t-53,-40r90"},800);
+             lhfour.animate({transform: "t-86,-72r90"},800);
+             lhfive.animate({transform: "t-123,-92r90t"},800);
+             // lhtwo.transform("t-20,-9r90"); 
+             // lhthree.transform("t-50,-40r90");
+             // lhfour.transform("t-83,-72r90");
+             // lhfive.transform("t-120,-92r90t");
+
+
+             
+
+           // var center_x=(371.43)*scale_factor;
+           // var center_y=(original_height-(654.29))*scale_factor;  
+           // var positionRightHand='R'+90+', '+center_x+', '+center_y;  
+           // var rightHandAnim=Raphael.animation({transform: positionRightHand}, options.time, 'linear').repeat(Infinity);
+           // myRectangles.animate(rightHandAnim);
+
+           // rest unwanted
+           // myRectangles.animate({rotation: '360 453.26 655.49'});
+           // myRectangles.rotate(3,453.26,655.49);
 
             // var center_x=(365.71)*scale_factor;
             // var center_y=(original_height-(502.86))*scale_factor;
-
-            // var playButtonRef = r.set().push(rtwo).push(rthree).push(rfour).push(rfive);
-            // playButtonRef.rotate(3,453.26,655.49);
 
             // var positionrtwo='R'+20+', '+center_x+', '+center_y;
             // var rtwoAnim=Raphael.animation({transform: posi00onrtwo}, options.time, 'linear').repeat(Infinity);
